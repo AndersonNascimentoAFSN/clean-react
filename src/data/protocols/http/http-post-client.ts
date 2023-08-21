@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HttpResponse } from './http-reponse'
+import { HttpResponse } from '.'
 
 export type HttpPostParams<T> = {
   url: string
