@@ -10,7 +10,7 @@
     }
   },
   "scripts": {
-    "start": "webpack-dev-server --open",
+    "start": "webpack-dev-server",
     "test": "jest ---passWithNoTests --no-cache --runInBand",
     "test:watch": "npm test -- --watch",
     "test:staged": "npm test -- --findRelatedTests",
@@ -33,6 +33,7 @@
     "eslint-plugin-import": "^2.28.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-standard": "^5.0.0",
     "git-commit-msg-linter": "^5.0.4",
     "husky": "^8.0.3",
