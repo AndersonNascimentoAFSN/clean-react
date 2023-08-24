@@ -1,41 +1,28 @@
 import React from 'react'
 
-import { Logo } from '@/presentation/components/logo'
+import { LoginHeader, Footer, Input, FormStatus } from '@/presentation/components'
 
-import styles from './login-styles.scss'
-import { Spinner } from '@/presentation/components/spinner/spinner'
+import Styles from './login-styles.scss'
 
-export const Login: React.FC = () => {
+const Login: React.FC = () => {
   return (
-    <div className={styles['login']}>
-      <header className={styles['header']}>
-        <Logo />
-        <h1>4Dev - Enquetes para Programadores</h1>
-      </header>
-
-      <form className={styles['form']}>
+    <div className={Styles.login}>
+      <LoginHeader />
+      <form className={Styles.form}>
         <h2>Login</h2>
 
-        <div className={styles['input-wrap']}>
-          <input type="email" name="email" placeholder="Digite seu e-mail" />
-          <span className={styles['status']}>circle red</span>
-        </div>
+        <Input type="email" name="email" placeholder="Digite seu e-mail" />
+        <Input type="password" name="password" placeholder="Digite sua senha" />
 
-        <div className={styles['input-wrap']}>
-          <input type="password" name="password" placeholder="Digite sua senha" />
-          <span className={styles['status']}>circle red</span>
-        </div>
+        <button className={Styles.submit} type="submit">Entrar</button>
 
-        <button className={styles['submit']} type="submit">Entrar</button>
-        <span className={styles['link']}>Criar conta</span>
+        <span className={Styles.link}>Criar conta</span>
 
-        <div className={styles['error-wrap']}>
-          <Spinner className={styles['spinner']} />
-          <span className={styles['error']}>Erro</span>
-        </div>
+        <FormStatus />
       </form>
-
-      <footer />
+      <Footer />
     </div>
   )
 }
+
+export default Login

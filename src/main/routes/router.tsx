@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import React from 'react'
 
-import { Login } from '@/presentation/pages/login/login'
+import { Login } from '@/presentation/pages'
 
 export const Router: React.FC = () => {
   return (
