@@ -1,3 +1,5 @@
+@import "../../styles/colors.scss";
+
 .inputWrap {
   margin-top: 16px;
   display: flex;
@@ -6,6 +8,18 @@
 
   input {
     flex-grow: 1;
+  }
+
+
+  .input {
+    padding: 10px 5px;
+    border: 1px solid $primaryDark;
+    border-radius: 4px;
+    transition: border 1s;
+  }
+  
+  .input:hover {
+    border: 1px solid $primaryLight;
   }
 
   .status {

@@ -11,7 +11,7 @@ const Input: React.FC<Props> = (props: Props) => {
 
   return (
     <div className={Styles.inputWrap}>
-      <input autoComplete='off' /* readOnly onFocus={enableInput} */ {...props} />
+      <input autoComplete='off' /* readOnly onFocus={enableInput} */ {...props} className={Styles.input}/>
       <span className={Styles.status}>🔴</span>
     </div>
   )
