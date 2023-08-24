@@ -7,8 +7,6 @@ import React from 'react'
 
 import { Login } from '@/presentation/pages'
 
-import '@/presentation/styles/global.scss'
-
 const router = createBrowserRouter([
   {
     path: "/login",
