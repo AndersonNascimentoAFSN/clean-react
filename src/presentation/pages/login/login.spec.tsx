@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { render } from '@testing-library/react'
+import { render,  } from '@testing-library/react'
 import type { RenderResult } from '@testing-library/react'
 
 import { Login } from './login'
@@ -17,7 +17,7 @@ const makeSut = (): SutTypes => {
 }
 
 describe('Login Component', () => {
-  describe('should start with initial state', () => {
+  describe('initial state', () => {
     it('should not render spinner and error message on start', () => {
       const { sut } = makeSut()
       // const errorWrap = getByTestId('form-status')
@@ -45,6 +45,15 @@ describe('Login Component', () => {
       expect(passwordStatus.title).toBe('Campo obrigatório')
       expect(emailStatus).toHaveTextContent('🔴')
       expect(passwordStatus).toHaveTextContent('🔴')
+    })
+  })
+  describe('validation', () => {
+    it('should call validation with correct value', () => {
+      const { sut } = makeSut()
+      const emailInput = sut.getByRole('textbox', { name: /email/i })
+      // const passwordInput = sut.getByRole('textbox', { name: /password/i })
+      
+
     })
   })
 })
