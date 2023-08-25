@@ -1,22 +1,40 @@
 import React from 'react'
 
-import { render,  } from '@testing-library/react'
+import { render, cleanup } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+
 import type { RenderResult } from '@testing-library/react'
 
 import { Login } from './login'
+import { Validation } from '@/presentation/protocols'
 
 type SutTypes = {
   sut: RenderResult
+  validationSpy: ValidationSpy
+}
+
+class ValidationSpy implements Validation {
+  errorMessage: string
+  input: object
+
+  validate(input: object): string {
+    this.input = input
+    return this.errorMessage
+  }
 }
 
 const makeSut = (): SutTypes => {
-  const sut = render(<Login />)
+  const validationSpy = new ValidationSpy()
+  const sut = render(<Login validation={validationSpy}/>)
   return {
-    sut
+    sut,
+    validationSpy
   }
 }
 
 describe('Login Component', () => {
+  afterEach(cleanup)
+
   describe('initial state', () => {
     it('should not render spinner and error message on start', () => {
       const { sut } = makeSut()
@@ -48,12 +66,16 @@ describe('Login Component', () => {
     })
   })
   describe('validation', () => {
-    it('should call validation with correct value', () => {
-      const { sut } = makeSut()
+    it('should call validation with correct email', async () => {
+      const { sut, validationSpy } = makeSut()
       const emailInput = sut.getByRole('textbox', { name: /email/i })
       // const passwordInput = sut.getByRole('textbox', { name: /password/i })
-      
 
+      await userEvent.type(emailInput, 'any_email')
+
+      expect(validationSpy.input).toEqual({
+        email: 'any_email'
+      })
     })
   })
 })
