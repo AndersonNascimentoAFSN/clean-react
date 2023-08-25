@@ -1,42 +1,45 @@
 import React from 'react'
 
-import { getByRole, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
+import type { RenderResult } from '@testing-library/react'
 
 import { Login } from './login'
+
+type SutTypes = {
+  sut: RenderResult
+}
+
+const makeSut = (): SutTypes => {
+  const sut = render(<Login />)
+  return {
+    sut
+  }
+}
 
 describe('Login Component', () => {
   describe('should start with initial state', () => {
     it('should not render spinner and error message on start', () => {
-      const { getByTestId, queryByTestId } = render(<Login />)
+      const { sut } = makeSut()
       // const errorWrap = getByTestId('form-status')
       // expect(errorWrap.childElementCount).toBe(0)
 
-      const spinner = queryByTestId('spinner')
-      const errorMessage = queryByTestId('error-message')
+      const spinner = sut.queryByTestId('spinner')
+      const errorMessage = sut.queryByTestId('error-message')
 
       expect(spinner).not.toBeInTheDocument()
       expect(errorMessage).not.toBeInTheDocument()
     })
     it('should starts with a submit button disabled', () => {
-      const { getByRole } = render(<Login />)
+      const { sut } = makeSut()
 
-      const submitButton = getByRole('button', { name: /entrar/i })
+      const submitButton = sut.getByRole('button', { name: /entrar/i })
       expect(submitButton).toHaveAttribute('disabled')
     })
-    // it('should starts with a submit button disabled', () => {
-    //   const { getByRole } = render(<Login />)
-
-    //   const emailInput = getByRole('textbox', { name: /email/i })
-    //   const passwordInput = getByRole('textbox', { name: /password/i })
-
-    //   expect(emailInput).toBeInTheDocument()
-    //   expect(passwordInput).toBeInTheDocument()
-    // })
     it('should starts input error span with title and content initial', () => {
-      const { getByTestId } = render(<Login />)
+      const { sut } = makeSut()
 
-      const emailStatus = getByTestId('email-status')
-      const passwordStatus = getByTestId('password-status')
+      const emailStatus = sut.getByTestId('email-status')
+      const passwordStatus = sut.getByTestId('password-status')
 
       expect(emailStatus.title).toBe('Campo obrigatório')
       expect(passwordStatus.title).toBe('Campo obrigatório')
@@ -45,3 +48,13 @@ describe('Login Component', () => {
     })
   })
 })
+
+// it('should starts with a submit button disabled', () => {
+//   const { getByRole } = render(<Login />)
+
+//   const emailInput = getByRole('textbox', { name: /email/i })
+//   const passwordInput = getByRole('textbox', { name: /password/i })
+
+//   expect(emailInput).toBeInTheDocument()
+//   expect(passwordInput).toBeInTheDocument()
+// })
