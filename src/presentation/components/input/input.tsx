@@ -10,7 +10,15 @@ const Input: React.FC<Props> = (props: Props) => {
   // const enableInput = (event: React.FocusEvent<HTMLInputElement>): void => {
   //   event.target.readOnly = false
   // }
-  const { errorState } = useContext(FormContext)
+
+  const { errorState, state, actions: { setState } } = useContext(FormContext)
+
+  const handleChange = (event: React.FocusEvent<HTMLInputElement>): void => {
+    setState({
+      ...state,
+      [event.target.name]: event.target.value
+    })
+  }
 
   const getStatus = (): string => {
     return '🔴'
@@ -25,7 +33,12 @@ const Input: React.FC<Props> = (props: Props) => {
 
   return (
     <div className={Styles.inputWrap}>
-      <input autoComplete='off' /* readOnly onFocus={enableInput} */ {...props} className={Styles.input} />
+      <input
+        {...props}
+        autoComplete='off' /* readOnly onFocus={enableInput} */
+        className={Styles.input}
+        onChange={handleChange}
+      />
       <span
         title={title}
         className={Styles.status}
