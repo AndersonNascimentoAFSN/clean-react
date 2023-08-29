@@ -156,5 +156,23 @@ describe('Login Component', () => {
       const submitButton = sut.getByRole('button', { name: /entrar/i })
       expect(submitButton).not.toHaveAttribute('disabled')
     })
+
+    it('should show spinner on submit', async () => {
+      const { sut } = makeSut()
+
+      const emailInput = sut.getByRole('textbox', { name: /email/i })
+      const passwordInput = sut.getByRole('textbox', { name: /password/i })
+      const submitButton = sut.getByRole('button', { name: /entrar/i })
+
+      await userEvent.type(emailInput, faker.internet.email())
+      await userEvent.type(passwordInput, faker.internet.password())
+      await userEvent.click(submitButton)
+
+      const spinner = sut.queryByTestId('spinner')
+
+      expect(spinner).toBeInTheDocument()
+
+      // expect(submitButton).not.toHaveAttribute('disabled')
+    })
   })
 })
