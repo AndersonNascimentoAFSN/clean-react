@@ -55,7 +55,7 @@ describe('Login Component', () => {
       const passwordStatus = sut.getByTestId('password-status')
 
       expect(emailStatus.title).toBe(validationSpy.errorMessage)
-      expect(passwordStatus.title).toBe('Campo obrigatório')
+      expect(passwordStatus.title).toBe(validationSpy.errorMessage)
       expect(emailStatus).toHaveTextContent('🔴')
       expect(passwordStatus).toHaveTextContent('🔴')
     })
@@ -94,6 +94,18 @@ describe('Login Component', () => {
 
       expect(emailStatus.title).toBe(validationSpy.errorMessage)
       expect(emailStatus).toHaveTextContent('🔴')
+    })
+
+    it('should show password error if validation fails', async () => {
+      const { sut, validationSpy } = makeSut()
+
+      const passwordInput = sut.getByRole('textbox', { name: /password/i })
+      await userEvent.type(passwordInput, faker.internet.password())
+
+      const passwordStatus = sut.getByTestId('password-status')
+
+      expect(passwordStatus.title).toBe(validationSpy.errorMessage)
+      expect(passwordStatus).toHaveTextContent('🔴')
     })
   })
 })
