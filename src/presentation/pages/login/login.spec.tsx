@@ -66,15 +66,25 @@ describe('Login Component', () => {
     })
   })
   describe('validation', () => {
+    afterEach(cleanup)
+    
     it('should call validation with correct email', async () => {
       const { sut, validationSpy } = makeSut()
       const emailInput = sut.getByRole('textbox', { name: /email/i })
-      // const passwordInput = sut.getByRole('textbox', { name: /password/i })
-
       await userEvent.type(emailInput, 'any_email')
-
       expect(validationSpy.input).toEqual({
         email: 'any_email'
+      })
+    })
+
+    it('should call validation with correct password', async () => {
+      const { sut, validationSpy } = makeSut()
+      const passwordInput = sut.getByRole('textbox', { name: /password/i })
+
+      await userEvent.type(passwordInput, 'any_password')
+
+      expect(validationSpy.input).toEqual({
+        password: 'any_password'
       })
     })
   })
