@@ -14,11 +14,15 @@ type SutTypes = {
   validationSpy: ValidationSpy
 }
 
+type SutParams = {
+  validationError: string
+}
 
 
-const makeSut = (): SutTypes => {
+
+const makeSut = (params?: SutParams): SutTypes => {
   const validationSpy = new ValidationSpy()
-  validationSpy.errorMessage = faker.internet.displayName()
+  validationSpy.errorMessage = params?.validationError
 
   const sut = render(<Login validation={validationSpy} />)
   return {
@@ -43,19 +47,23 @@ describe('Login Component', () => {
       expect(errorMessage).not.toBeInTheDocument()
     })
     it('should starts with a submit button disabled', () => {
-      const { sut } = makeSut()
+      const validationError = faker.internet.displayName()
+
+      const { sut } = makeSut({ validationError })
 
       const submitButton = sut.getByRole('button', { name: /entrar/i })
       expect(submitButton).toHaveAttribute('disabled')
     })
     it('should starts input error span with title and content initial', () => {
-      const { sut, validationSpy } = makeSut()
+      const validationError = faker.internet.displayName()
+
+      const { sut } = makeSut({ validationError })
 
       const emailStatus = sut.getByTestId('email-status')
       const passwordStatus = sut.getByTestId('password-status')
 
-      expect(emailStatus.title).toBe(validationSpy.errorMessage)
-      expect(passwordStatus.title).toBe(validationSpy.errorMessage)
+      expect(emailStatus.title).toBe(validationError)
+      expect(passwordStatus.title).toBe(validationError)
       expect(emailStatus).toHaveTextContent('🔴')
       expect(passwordStatus).toHaveTextContent('🔴')
     })
@@ -74,7 +82,7 @@ describe('Login Component', () => {
 
     it('should call validation with correct password', async () => {
       const { sut, validationSpy } = makeSut()
-      const password  = faker.internet.password()
+      const password = faker.internet.password()
 
       const passwordInput = sut.getByRole('textbox', { name: /password/i })
 
@@ -85,33 +93,35 @@ describe('Login Component', () => {
     })
 
     it('should show email error if validation fails', async () => {
-      const { sut, validationSpy } = makeSut()
+      const validationError = faker.internet.displayName()
+
+      const { sut } = makeSut({ validationError })
 
       const emailInput = sut.getByRole('textbox', { name: /email/i })
       await userEvent.type(emailInput, faker.internet.email())
 
       const emailStatus = sut.getByTestId('email-status')
 
-      expect(emailStatus.title).toBe(validationSpy.errorMessage)
+      expect(emailStatus.title).toBe(validationError)
       expect(emailStatus).toHaveTextContent('🔴')
     })
 
     it('should show password error if validation fails', async () => {
-      const { sut, validationSpy } = makeSut()
+      const validationError = faker.internet.displayName()
+
+      const { sut } = makeSut({ validationError })
 
       const passwordInput = sut.getByRole('textbox', { name: /password/i })
       await userEvent.type(passwordInput, faker.internet.password())
 
       const passwordStatus = sut.getByTestId('password-status')
 
-      expect(passwordStatus.title).toBe(validationSpy.errorMessage)
+      expect(passwordStatus.title).toBe(validationError)
       expect(passwordStatus).toHaveTextContent('🔴')
     })
 
     it('should show valid email state if validation succeeds', async () => {
-      const { sut, validationSpy } = makeSut()
-
-      validationSpy.errorMessage = null
+      const { sut } = makeSut()
 
       const emailInput = sut.getByRole('textbox', { name: /email/i })
       await userEvent.type(emailInput, faker.internet.email())
@@ -123,9 +133,7 @@ describe('Login Component', () => {
     })
 
     it('should show valid password state if validation succeeds', async () => {
-      const { sut, validationSpy } = makeSut()
-
-      validationSpy.errorMessage = null
+      const { sut } = makeSut()
 
       const passwordInput = sut.getByRole('textbox', { name: /password/i })
       await userEvent.type(passwordInput, faker.internet.password())
@@ -137,9 +145,7 @@ describe('Login Component', () => {
     })
 
     it('should enable submit button if form is valid', async () => {
-      const { sut, validationSpy } = makeSut()
-
-      validationSpy.errorMessage = null
+      const { sut } = makeSut()
 
       const emailInput = sut.getByRole('textbox', { name: /email/i })
       const passwordInput = sut.getByRole('textbox', { name: /password/i })
