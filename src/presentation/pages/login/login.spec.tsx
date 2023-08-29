@@ -1,4 +1,5 @@
 import React from 'react'
+import { faker } from '@faker-js/faker'
 
 import { render, cleanup } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -60,20 +61,25 @@ describe('Login Component', () => {
   describe('validation', () => {
     it('should call validation with correct email', async () => {
       const { sut, validationSpy } = makeSut()
+
+      const email = faker.internet.email()
+
       const emailInput = sut.getByRole('textbox', { name: /email/i })
-      await userEvent.type(emailInput, 'any_email')
+      await userEvent.type(emailInput, email)
       expect(validationSpy.fieldName).toBe('email')
-      expect(validationSpy.fieldValue).toBe('any_email')
+      expect(validationSpy.fieldValue).toBe(email)
     })
 
     it('should call validation with correct password', async () => {
       const { sut, validationSpy } = makeSut()
+      const password  = faker.internet.password()
+
       const passwordInput = sut.getByRole('textbox', { name: /password/i })
 
-      await userEvent.type(passwordInput, 'any_password')
+      await userEvent.type(passwordInput, password)
 
       expect(validationSpy.fieldName).toBe('password')
-      expect(validationSpy.fieldValue).toBe('any_password')
+      expect(validationSpy.fieldValue).toBe(password)
     })
   })
 })
