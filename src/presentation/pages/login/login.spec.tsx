@@ -107,5 +107,19 @@ describe('Login Component', () => {
       expect(passwordStatus.title).toBe(validationSpy.errorMessage)
       expect(passwordStatus).toHaveTextContent('🔴')
     })
+
+    it('should show valid password state if validation succeeds', async () => {
+      const { sut, validationSpy } = makeSut()
+
+      validationSpy.errorMessage = null
+
+      const passwordInput = sut.getByRole('textbox', { name: /password/i })
+      await userEvent.type(passwordInput, faker.internet.password())
+
+      const passwordStatus = sut.getByTestId('password-status')
+
+      expect(passwordStatus.title).toBe('Tudo certo!')
+      expect(passwordStatus).toHaveTextContent('🟢')
+    })
   })
 })
