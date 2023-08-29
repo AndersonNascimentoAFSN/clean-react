@@ -108,6 +108,20 @@ describe('Login Component', () => {
       expect(passwordStatus).toHaveTextContent('🔴')
     })
 
+    it('should show valid email state if validation succeeds', async () => {
+      const { sut, validationSpy } = makeSut()
+
+      validationSpy.errorMessage = null
+
+      const emailInput = sut.getByRole('textbox', { name: /email/i })
+      await userEvent.type(emailInput, faker.internet.email())
+
+      const emailStatus = sut.getByTestId('email-status')
+
+      expect(emailStatus.title).toBe('Tudo certo!')
+      expect(emailStatus).toHaveTextContent('🟢')
+    })
+
     it('should show valid password state if validation succeeds', async () => {
       const { sut, validationSpy } = makeSut()
 
