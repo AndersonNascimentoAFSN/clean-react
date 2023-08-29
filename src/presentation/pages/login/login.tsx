@@ -60,7 +60,13 @@ export const Login: React.FC<Props> = ({ validation }: Props) => {
             role="textbox"
           />
 
-          <button className={Styles.submit} type="submit" disabled>Entrar</button>
+          <button
+            className={Styles.submit}
+            type="submit"
+            disabled={!!errorState.email || !!errorState.password}
+          >
+            Entrar
+          </button>
 
           <span className={Styles.link}>Criar conta</span>
 
