@@ -66,8 +66,6 @@ describe('Login Component', () => {
     })
   })
   describe('validation', () => {
-    afterEach(cleanup)
-    
     it('should call validation with correct email', async () => {
       const { sut, validationSpy } = makeSut()
       const emailInput = sut.getByRole('textbox', { name: /email/i })
@@ -89,13 +87,3 @@ describe('Login Component', () => {
     })
   })
 })
-
-// it('should starts with a submit button disabled', () => {
-//   const { getByRole } = render(<Login />)
-
-//   const emailInput = getByRole('textbox', { name: /email/i })
-//   const passwordInput = getByRole('textbox', { name: /password/i })
-
-//   expect(emailInput).toBeInTheDocument()
-//   expect(passwordInput).toBeInTheDocument()
-// })
